@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_11_033341) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_11_045847) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,9 +21,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_11_033341) do
     t.integer "status"
     t.integer "quantity"
     t.datetime "purchase_date"
-    t.integer "invoice_number"
+    t.bigint "invoice_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "category_id", null: false
+    t.index ["category_id"], name: "index_assets_on_category_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -51,12 +53,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_11_033341) do
     t.float "elevation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "map_id", null: false
+    t.index ["map_id"], name: "index_markers_on_map_id"
   end
 
   create_table "orders", force: :cascade do |t|
     t.string "name"
     t.integer "quantity"
-    t.integer "class"
+    t.integer "classification"
     t.datetime "transaction_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -79,4 +83,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_11_033341) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "assets", "categories"
+  add_foreign_key "markers", "maps"
 end
