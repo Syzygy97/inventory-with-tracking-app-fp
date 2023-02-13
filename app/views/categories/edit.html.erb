@@ -1,2 +1,21 @@
 <h1>Categories#edit</h1>
 <p>Find me in app/views/categories/edit.html.erb</p>
+
+
+<%= form_with scope: :category, url: categories_path, local: true, method: :put do |f| %>
+
+	<p>
+		<%= f.label :name %><br/>
+		<%= f.text_field :name %>
+	</p>
+
+	<p>
+	<%= f.label :description %><br/>
+	<%= f.text_field :description %>
+	</p>
+
+	<p>
+		<%= f.submit %>
+	</p>
+
+<% end %>
