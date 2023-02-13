@@ -1,17 +1,17 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  root "categories#index"
-
   devise_for :users
-
+  
+  get 'dashboard', to: "dashboard#index", as: "dashboard"
   resources :categories do
-    resources :assets do
-      resources :orders
-      resources :markers
-    end
+    resources :assets
   end
-
-  resources :maps
+  resources :orders
+  
+  resources :maps do
+    resources :markers
+  end
+  
+  # Defines the root path route ("/")
+  root "dashboard#index"
 end
