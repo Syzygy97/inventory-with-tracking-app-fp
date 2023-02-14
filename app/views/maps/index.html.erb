@@ -1,2 +1,42 @@
-<h1>Maps#index</h1>
-<p>Find me in app/views/maps/index.html.erb</p>
+<h1>MONITORING MAP</h1>
+<%= link_to "New Map", new_map_path %>
+
+<div id="myMap" data-maps-target="myMap" style='width:100vw;height:60vh;'></div>
+<script>
+  document.addEventListener("turbo:load", function () {
+    var map = new Microsoft.Maps.Map("#myMap", {
+      credentials: "<%= Rails.application.credentials[:bing_maps_key] %>",
+      center: new Microsoft.Maps.Location(14.582919, 120.979683),
+      zoom: 14
+    });
+
+    // // ADDS 1 PUSHPIN WITH TEXT
+    // var center = map.getcenter();
+    // var pin = new Microsoft.Maps.Pushpin(center, {
+    //   title: "Rizal",
+    //   subTitle: "Park",
+    //   text: "1"
+    // });
+
+
+    // SOLUTION #1 FOR ADDING MULTIPLE PUSHPINS
+    var latlng = [{lat: 14.582919, lng: 120.979683}, {lat: 14.589597, lng: 120.974726}] // EXAMPLE ONLY
+    var len = latlng.length
+
+    for (var i = 0; i < len; i++) {
+      var pin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(latlng[i].lat, latlng[i].lng));
+      map.entities.push(pin);
+    }
+    
+    // // SOLUTION #2 FOR ADDING MULTIPLE PUSHPINS
+    // var pins = new Microsoft.Maps.EntityCollection();
+    // var latlng = [{lat: 14.582919, lng: 120.979683}, {lat: 14.589597, lng: 120.974726}]
+    // var len = latlng.length
+    // for (var i = 0; i < len; i++) {
+    //   var position = new Microsoft.Maps.Location(latlng[i].lat, latlng[i].lng);
+    //   var pin = new Microsoft.Maps.Pushpin(position);
+    //   pins.push(pin);
+    // }
+    // map.entities.push(pins);
+  })
+</script>
