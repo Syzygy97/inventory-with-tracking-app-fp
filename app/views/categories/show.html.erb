@@ -1,2 +1,17 @@
 <h1>Categories#show</h1>
 <p>Find me in app/views/categories/show.html.erb</p>
+
+<table>
+  <thead>
+    <th>Name</th>
+  <thead>
+
+  <tbody>
+      <tr>
+        <td><%= @category.name %></td>
+        <td><%= link_to 'Show Assets', category_assets_path(@category) %>
+      <tr>
+  </tbody>
+</table>
+
+<%= link_to 'All Categories', categories_path %>

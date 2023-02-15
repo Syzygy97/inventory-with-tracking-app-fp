@@ -2,7 +2,7 @@
 <p>Find me in app/views/categories/edit.html.erb</p>
 
 
-<%= form_with scope: :category, url: categories_path, local: true, method: :put do |f| %>
+<%= form_for @category, url: category_path, local: true, method: :put do |f| %>
 
 	<p>
 		<%= f.label :name %><br/>
@@ -10,8 +10,9 @@
 	</p>
 
 	<p>
-	<%= f.label :description %><br/>
-	<%= f.text_field :description %>
+		<%= f.label :description %><br/>
+		<%= f.text_field :description %>
+		<%= f.hidden_field :id, value: @category.id %>
 	</p>
 
 	<p>
