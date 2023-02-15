@@ -1,2 +1,39 @@
 <h1>Assets#edit</h1>
 <p>Find me in app/views/assets/edit.html.erb</p>
+
+<%= form_with scope: :asset, url: category_asset_path, local: true, method: :put do |f| %>
+
+	<p>
+		<%= f.label :name %><br/>
+		<%= f.text_field :name %>
+	</p>
+	<p>
+		<%= f.label :description %><br/>
+		<%= f.text_field :description %>
+	</p>
+	<p>
+		<%= f.label :classification %><br/>
+		<%= f.number_field :classification %>
+	</p>
+	<p>
+		<%= f.label :status %><br/>
+		<%= f.number_field :status %>
+	</p>
+	<p>
+		<%= f.label :quantity %><br/>
+		<%= f.number_field :quantity %>
+	</p>
+	<p>
+		<%= f.label :purchase_date %><br/>
+		<%= f.date_field :purchase_date %>
+	</p>
+	<p>
+		<%= f.label :invoice_number %><br/>
+		<%= f.number_field :invoice_number %>
+	</p>
+
+	<p>
+		<%= f.submit %>
+	</p>
+
+<% end %>

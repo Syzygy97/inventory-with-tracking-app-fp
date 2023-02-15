@@ -1,2 +1,36 @@
 <h1>Assets#index</h1>
 <p>Find me in app/views/assets/index.html.erb</p>
+
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+			<th>Classification</th>
+			<th>Status</th>
+			<th>Quantity</th>
+			<th>Purchase Date</th>
+			<th>Invoice Number</th>
+		</tr>
+	</thead>
+
+    <tbody>
+			<% @assets.each do |asset| %>
+				<tr>
+					<td><%= asset.name %></td>
+					<td><%= asset.description %></td>
+					<td><%= asset.classification %></td>
+					<td><%= asset.status %></td>
+					<td><%= asset.quantity %></td>
+					<td><%= asset.purchase_date %></td>
+					<td><%= asset.invoice_number %></td>
+					<td><%= link_to 'Show', category_asset_path(@category, asset) %></td>
+					<td><%= link_to 'Edit', edit_category_asset_path(@category, asset) %></td>
+					<td><%= button_to "Delete", category_asset_path(@category, asset), method: :delete %></td>
+				</tr>
+			<% end %>
+    </tbody>
+</table>
+
+<%= link_to 'Add Asset', new_category_asset_path(@category) %>
+<%= link_to 'All Categories', categories_path %>

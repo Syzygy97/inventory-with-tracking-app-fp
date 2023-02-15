@@ -1,2 +1,33 @@
 <h1>Assets#show</h1>
 <p>Find me in app/views/assets/show.html.erb</p>
+
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+			<th>Classification</th>
+			<th>Status</th>
+			<th>Quantity</th>
+			<th>Purchase Date</th>
+			<th>Invoice Number</th>
+		</tr>
+	</thead>
+
+	<tbody>
+	<tr>
+		<td><%= @asset.name %></td>
+		<td><%= @asset.description %></td>
+		<td><%= @asset.classification %></td>
+		<td><%= @asset.status %></td>
+		<td><%= @asset.quantity %></td>
+		<td><%= @asset.purchase_date %></td>
+		<td><%= @asset.invoice_number %></td>
+		<td><%= link_to 'Edit', edit_category_asset_path(@category) %></td>
+		<td><%= button_to "Delete", category_asset_path(@category), method: :delete %></td>
+	</tr>
+	</tbody>
+
+</table>
+
+<%= link_to 'All Assets', category_assets_path %>

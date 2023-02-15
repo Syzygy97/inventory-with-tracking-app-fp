@@ -4,11 +4,13 @@
 <table>
   <thead>
     <th>Name</th>
+    <th>Description</th>
   <thead>
 
   <tbody>
       <tr>
         <td><%= @category.name %></td>
+        <td><%= @category.description %></td>
         <td><%= link_to 'Show Assets', category_assets_path(@category) %>
       <tr>
   </tbody>
