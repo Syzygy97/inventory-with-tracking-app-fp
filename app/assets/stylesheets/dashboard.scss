@@ -1,0 +1,14 @@
+#dashboard-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+#sidebar {
+  height: 100%;
+  border-right: 2px solid black;
+  width: calc(15vw - 2px);
+}
+#dashboard-content {
+  width: 85vw;
+}

@@ -1,2 +1,15 @@
-<h1>Categories#show</h1>
-<p>Find me in app/views/categories/show.html.erb</p>
+<h1><%= @category.name %></h1>
+<h3><i><%= @category.description %></i></h3>
+<%= link_to "Add an asset", new_category_asset_path(@category)%>
+
+<h2>LIST OF ASSETS</h2>
+<% @category.assets.each do |asset|%>
+  <ul>
+    <li>Name: <%= asset.name%></li>
+    <li>Description: <%= asset.description%></li>
+    <li>Quantity: <%= asset.quantity%></li>
+    <li>Class: <%= asset.classification%></li>
+    <li>Status: <%= asset.status%></li>
+  </ul>
+  <%= link_to "Deploy Asset", new_category_asset_marker_path(@category, asset.id)%>
+<% end %>

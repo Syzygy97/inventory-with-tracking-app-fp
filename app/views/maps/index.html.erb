@@ -2,32 +2,50 @@
 <%= link_to "New Map", new_map_path %>
 
 <div id="myMap" data-maps-target="myMap" style='width:100vw;height:60vh;'></div>
+<% @markers.each do |marker| %>
+  <input type="hidden" value="<%= marker.latitude %>, <%= marker.longitude %>" id="marker<%= marker.id %>" class="asset-coordinates">
+<% end %>
+
 <script>
   document.addEventListener("turbo:load", function () {
     var map = new Microsoft.Maps.Map("#myMap", {
-      credentials: "<%= Rails.application.credentials[:bing_maps_key] %>",
+      credentials: "<%= Rails.application.credentials[:bing_maps_key]%>",
       center: new Microsoft.Maps.Location(14.582919, 120.979683),
-      zoom: 14
+      zoom: 12
     });
 
+    var markerCoordinates = document.querySelectorAll(".asset-coordinates");
+    var latlng = [];
+    
+    markerCoordinates.forEach(coordinate => {
+      const coorArray = coordinate.value.match(/\-?\d+\.\d+/g);
+      const coorObj = coorArray.reduce((acc,val) => ({ ...acc, [coorArray.indexOf(val) % 2 == 0 ? "lat" : "lng" ]: parseFloat(val)}), {})
+      latlng.push(coorObj)
+    });
+
+    for (var i = 0; i < latlng.length; i++) {
+      var pin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(latlng[i].lat, latlng[i].lng));
+      map.entities.push(pin);
+    }
     // // ADDS 1 PUSHPIN WITH TEXT
     // var center = map.getcenter();
     // var pin = new Microsoft.Maps.Pushpin(center, {
     //   title: "Rizal",
     //   subTitle: "Park",
-    //   text: "1"
+    //   text: "1" 
     // });
 
-
-    // SOLUTION #1 FOR ADDING MULTIPLE PUSHPINS
-    var latlng = [{lat: 14.582919, lng: 120.979683}, {lat: 14.589597, lng: 120.974726}] // EXAMPLE ONLY
-    var len = latlng.length
-
-    for (var i = 0; i < len; i++) {
-      var pin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(latlng[i].lat, latlng[i].lng));
-      map.entities.push(pin);
-    }
+    // // // SOLUTION #1 FOR ADDING MULTIPLE PUSHPINS
+    // var latlng = [{lat: 14.582919, lng: 120.979683}, {lat: 14.589597, lng: 120.974726}] // EXAMPLE ONLY
+    // var len = latlng.length
+    // // console.log(latlng);
     
+    // var len = latlng.length
+    // for (var i = 0; i < latlng.length; i++) {
+    //   var pin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(latlng[i].lat, latlng[i].lng));
+    //   map.entities.push(pin);
+    // }
+
     // // SOLUTION #2 FOR ADDING MULTIPLE PUSHPINS
     // var pins = new Microsoft.Maps.EntityCollection();
     // var latlng = [{lat: 14.582919, lng: 120.979683}, {lat: 14.589597, lng: 120.974726}]
