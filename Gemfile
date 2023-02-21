@@ -48,7 +48,6 @@ gem "bootsnap", require: false
 # Use Sass to process CSS
 gem "sassc-rails"
 
-gem "rspec-rails", "~> 6.0"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -62,11 +61,14 @@ gem 'rest-client', '~> 2.1'
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "rspec-rails", "~> 6.0"
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+
+  # gem "rspec-rails", "~> 6.0"
 
   # gem 'bundler-audit', '~> 0.9.1'
 
@@ -87,6 +89,8 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 
+  # gem "rspec-rails", "~> 6.0"
+  
   # gem 'bundler-audit', '~> 0.9.1'
 
   # gem 'rubocop', '~> 1.45', '>= 1.45.1'
