@@ -1,0 +1,51 @@
+<div data-controller="maps">
+<%= form_with(model: [:category, :asset, @marker]) do |form| %>
+  <% if @marker.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@marker.errors.count, "error") %> prohibited this category from being saved:</h2>
+
+      <ul>
+        <% @marker.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class = "marker-form">
+    <div>
+      <%= form.label :name %>
+      <%= form.text_field :name , class: "marker-form-name"%>
+    </div>
+
+    <div>
+      <%= form.label :description %>
+      <%= form.text_area :description, class: "marker-form-description"%>
+    </div>
+
+    <div>
+      <%= form.label :latitude %>
+      <%= form.number_field :latitude, step: :any, class: "marker-form-latitude", data: {"maps-target": "latitude"}%>
+    </div>
+
+    <div>
+      <%= form.label :longitude %>
+      <%= form.number_field :longitude, step: :any, class: "marker-form-longitude", data: {"maps-target": "longitude"}%>
+    </div>
+
+    <div id="searchBoxContainer">
+      <%= form.label :address %>
+      <%= form.search_field :address, class: "marker-form-address", id: "searchBox"%>
+    </div>
+
+    <%# <div> %>
+      <%# <%= form.number_field :user_id, value: current_user.id, id: :category_user_id, type: :hidden %> 
+    <%# </#div> %>
+  </div>
+
+  <div class="marker-submit-btn">
+    <%= form.submit %>
+  </div>
+  <div id="myMap" data-maps-target="myMap" style="width: 400px; height:400px"></div>
+<% end %>
+</div>

@@ -1,0 +1,38 @@
+<%# <div data-controller="maps"> %>
+<%= form_with(model: @map, data: {controller: "maps"}) do |form| %>
+
+  <div class = "map-form">
+    <div>
+      <%= form.label :name %>
+      <%= form.search_field :name , class: "map-form-name" %>
+    </div>
+
+    <div>
+      <%= form.label :description %>
+      <%= form.text_area :description, class: "map-form-description" %>
+    </div>
+
+    <div>
+      <%= form.label :latitude %>
+      <%= form.text_field :latitude, class: "map-form-latitude" %>
+    </div>
+    
+    <div>
+      <%= form.label :longitude %>
+      <%= form.text_field :longitude, class: "map-form-longitude" %>
+    </div>
+    
+    <%# <div> %>
+      <%# <%= form.number_field :user_id, value: current_user.id, id: :category_user_id, type: :hidden %> 
+    <%# </#div> %>
+  </div>
+
+  <div class="category-submit-btn">
+    <%= form.submit %>
+  </div>
+
+  <div id="myMap" style="position:relative;width:100vw;height:60vh;"></div>
+  <%# <div data-maps-target="myMap" style="width: 100vw; height: 50vh;"></div> %>
+
+<% end %>
+<%# </div> %>

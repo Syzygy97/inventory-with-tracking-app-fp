@@ -1,2 +1,101 @@
-<h1>Maps#index</h1>
-<p>Find me in app/views/maps/index.html.erb</p>
+<h1>MONITORING MAP</h1>
+<%= link_to "New Map", new_map_path %>
+
+<div id="myMap" data-maps-target="myMap" style='width:100vw;height:60vh;'></div>
+<% @markers.each do |marker| %>
+  <input type="hidden" value="<%= marker.latitude %>, <%= marker.longitude %>" id="marker<%= marker.id %>" class="asset-coordinates">
+  <input type="hidden" value="<%= marker.name %>" id="name<%= marker.id %>" class="marker-names">
+  <input type="hidden" value="<%= marker.description %>" id="description<%= marker.id %>" class="marker-descriptions">
+<% end %>
+
+<script>
+  document.addEventListener("turbo:load", function () {
+    var map = new Microsoft.Maps.Map("#myMap", {
+      credentials: "<%= Rails.application.credentials[:bing_maps_key]%>",
+      center: new Microsoft.Maps.Location(14.582919, 120.979683),
+      zoom: 12
+    });
+
+    infobox = new Microsoft.Maps.Infobox(map.getCenter(), {
+      visible: false
+    });
+
+    infobox.setMap(map);
+
+    var markerCoordinates = document.querySelectorAll(".asset-coordinates");
+    var markerNames = document.querySelectorAll(".marker-names");
+    var markerDescriptions = document.querySelectorAll(".marker-descriptions");
+    var latlng = [];
+    var name = [];
+    var description = [];
+
+    markerCoordinates.forEach(coordinate => {
+      const coorArray = coordinate.value.match(/\-?\d+\.\d+/g);
+      const coorObj = coorArray.reduce((acc,val) => ({ ...acc, [coorArray.indexOf(val) % 2 == 0 ? "lat" : "lng" ]: parseFloat(val)}), {})
+      latlng.push(coorObj)
+    });
+
+    markerNames.forEach(elem => {
+      name.push(elem.value)
+    });
+
+    markerDescriptions.forEach(elem => {
+      description.push(elem.value)
+    });
+
+    for (var i = 0; i < latlng.length; i++) {
+      var pin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(latlng[i].lat, latlng[i].lng));
+
+      pin.metadata = {
+        title: name[i],
+        description: description[i]
+      };
+
+      Microsoft.Maps.Events.addHandler(pin, 'click', pushpinClicked);
+
+      map.entities.push(pin);
+    }
+
+    function pushpinClicked(e) {
+      //Make sure the infobox has metadata to display.
+      if (e.target.metadata) {
+        //Set the infobox options with the metadata of the pushpin.
+        infobox.setOptions({
+          location: e.target.getLocation(),
+          title: e.target.metadata.title,
+          description: e.target.metadata.description,
+          visible: true
+        });
+      }
+    }
+    // // ADDS 1 PUSHPIN WITH TEXT
+    // var center = map.getcenter();
+    // var pin = new Microsoft.Maps.Pushpin(center, {
+    //   title: "Rizal",
+    //   subTitle: "Park",
+    //   text: "1" 
+    // });
+
+    // // // SOLUTION #1 FOR ADDING MULTIPLE PUSHPINS
+    // var latlng = [{lat: 14.582919, lng: 120.979683}, {lat: 14.589597, lng: 120.974726}] // EXAMPLE ONLY
+    // var len = latlng.length
+    // // console.log(latlng);
+    
+    // var len = latlng.length
+    // for (var i = 0; i < latlng.length; i++) {
+    //   var pin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(latlng[i].lat, latlng[i].lng));
+    //   map.entities.push(pin);
+    // }
+
+    // // SOLUTION #2 FOR ADDING MULTIPLE PUSHPINS
+    // var pins = new Microsoft.Maps.EntityCollection();
+    // var latlng = [{lat: 14.582919, lng: 120.979683}, {lat: 14.589597, lng: 120.974726}]
+    // var len = latlng.length
+    // for (var i = 0; i < len; i++) {
+    //   var position = new Microsoft.Maps.Location(latlng[i].lat, latlng[i].lng);
+    //   var pin = new Microsoft.Maps.Pushpin(position);
+    //   pins.push(pin);
+    // }
+    // map.entities.push(pins);
+  })
+</script>

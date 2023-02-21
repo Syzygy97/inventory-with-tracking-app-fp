@@ -4,13 +4,17 @@ Rails.application.routes.draw do
   
   get 'dashboard', to: "dashboard#index", as: "dashboard"
   resources :categories do
-    resources :assets
+    resources :assets do
+      resources :markers
+    end
   end
   resources :orders
   
-  resources :maps do
-    resources :markers
-  end
+  resources :maps
+
+  # namespace :api do
+    
+  # end
   
   # Defines the root path route ("/")
   root "dashboard#index"

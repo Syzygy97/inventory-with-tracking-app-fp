@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_11_045847) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_15_102303) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -38,11 +38,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_11_045847) do
   create_table "maps", force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.string "uuid"
-    t.string "privacy"
-    t.string "users_can_create_markers"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "latitude", precision: 10, scale: 6
+    t.decimal "longitude", precision: 10, scale: 6
   end
 
   create_table "markers", force: :cascade do |t|
@@ -53,8 +52,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_11_045847) do
     t.float "elevation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "map_id", null: false
-    t.index ["map_id"], name: "index_markers_on_map_id"
+    t.bigint "asset_id", null: false
+    t.string "address"
+    t.index ["asset_id"], name: "index_markers_on_asset_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -84,5 +84,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_11_045847) do
   end
 
   add_foreign_key "assets", "categories"
-  add_foreign_key "markers", "maps"
+  add_foreign_key "markers", "assets"
 end
