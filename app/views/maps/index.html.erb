@@ -4,6 +4,8 @@
 <div id="myMap" data-maps-target="myMap" style='width:100vw;height:60vh;'></div>
 <% @markers.each do |marker| %>
   <input type="hidden" value="<%= marker.latitude %>, <%= marker.longitude %>" id="marker<%= marker.id %>" class="asset-coordinates">
+  <input type="hidden" value="<%= marker.name %>" id="name<%= marker.id %>" class="marker-names">
+  <input type="hidden" value="<%= marker.description %>" id="description<%= marker.id %>" class="marker-descriptions">
 <% end %>
 
 <script>
@@ -14,18 +16,57 @@
       zoom: 12
     });
 
+    infobox = new Microsoft.Maps.Infobox(map.getCenter(), {
+      visible: false
+    });
+
+    infobox.setMap(map);
+
     var markerCoordinates = document.querySelectorAll(".asset-coordinates");
+    var markerNames = document.querySelectorAll(".marker-names");
+    var markerDescriptions = document.querySelectorAll(".marker-descriptions");
     var latlng = [];
-    
+    var name = [];
+    var description = [];
+
     markerCoordinates.forEach(coordinate => {
       const coorArray = coordinate.value.match(/\-?\d+\.\d+/g);
       const coorObj = coorArray.reduce((acc,val) => ({ ...acc, [coorArray.indexOf(val) % 2 == 0 ? "lat" : "lng" ]: parseFloat(val)}), {})
       latlng.push(coorObj)
     });
 
+    markerNames.forEach(elem => {
+      name.push(elem.value)
+    });
+
+    markerDescriptions.forEach(elem => {
+      description.push(elem.value)
+    });
+
     for (var i = 0; i < latlng.length; i++) {
       var pin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(latlng[i].lat, latlng[i].lng));
+
+      pin.metadata = {
+        title: name[i],
+        description: description[i]
+      };
+
+      Microsoft.Maps.Events.addHandler(pin, 'click', pushpinClicked);
+
       map.entities.push(pin);
+    }
+
+    function pushpinClicked(e) {
+      //Make sure the infobox has metadata to display.
+      if (e.target.metadata) {
+        //Set the infobox options with the metadata of the pushpin.
+        infobox.setOptions({
+          location: e.target.getLocation(),
+          title: e.target.metadata.title,
+          description: e.target.metadata.description,
+          visible: true
+        });
+      }
     }
     // // ADDS 1 PUSHPIN WITH TEXT
     // var center = map.getcenter();
