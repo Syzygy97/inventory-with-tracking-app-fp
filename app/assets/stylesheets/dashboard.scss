@@ -11,4 +11,20 @@
 }
 #dashboard-content {
   width: 85vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+
+  #myMap {
+    border: 2px solid black;
+    width: 80vw;
+    height: 58vh;
+  }
+  #transaction-history {
+    width: 80vw;
+    height: 38vh;
+    border: 2px solid black;
+  }
 }
