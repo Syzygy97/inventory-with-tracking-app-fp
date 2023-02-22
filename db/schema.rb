@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_15_102303) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_22_083211) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,6 +25,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_15_102303) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "category_id", null: false
+    t.decimal "price", precision: 8, scale: 2
     t.index ["category_id"], name: "index_assets_on_category_id"
   end
 
@@ -64,6 +65,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_15_102303) do
     t.datetime "transaction_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "price", precision: 8, scale: 2
   end
 
   create_table "users", force: :cascade do |t|
