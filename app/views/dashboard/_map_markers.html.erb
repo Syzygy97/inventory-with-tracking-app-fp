@@ -25,8 +25,8 @@
     var latlng = [];
     var name = [];
     var description = [];
-
     markerCoordinates.forEach(coordinate => {
+      if(markerCoordinates.length == 0) return;
       const coorArray = coordinate.value.match(/\-?\d+\.\d+/g);
       const coorObj = coorArray.reduce((acc,val) => ({ ...acc, [coorArray.indexOf(val) % 2 == 0 ? "lat" : "lng" ]: parseFloat(val)}), {})
       latlng.push(coorObj)

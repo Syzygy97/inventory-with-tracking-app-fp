@@ -1,2 +1,45 @@
-<h1>Assets#show</h1>
-<p>Find me in app/views/assets/show.html.erb</p>
+<div id="asset-show-container">
+  <%= render "dashboard/sidebar"%>
+  <div id="asset-show-content">
+    <nav>
+      <h3> <%= link_to "Categories", categories_path%> > <%= link_to "#{@category.name}", category_path(@category)%> > <%= @asset.name %></h3>
+    </nav>
+    <main>
+      <div id="asset-show-sub-header">
+        <div class="asset-show-name">
+          <h1><%= @asset.name %></h1>
+          <span>
+            <%= link_to "Update Asset", edit_category_asset_path(@category.id, @asset) %>
+            <% if @asset.classification == 1 %>
+              <h3><%= link_to "Deploy Asset", new_category_asset_marker_path(@category, @asset) %></h3>
+            <% else %>
+              <h3>Not Deployable</h3>
+            <% end %>
+          </span>
+        </div>
+        <div class="asset-show-id">
+          <h3>Truckify ID: TRKFY<%= @category.id %><%= @asset.id %></h3>
+          <h3>Updated at: <%= @asset.updated_at %></h3>
+        </div>
+      </div>
+      <div id="asset-show-info">
+        <div>
+          <div class="asset-quantity-class ast">
+            <h3>Quantity: <%= @asset.quantity %></h3>
+            <h3>Class: <%= @asset.classification %></h3>
+          </div>
+          <div class="asset-price-total-value ast">
+            <h3>Price: example price</h3> 
+            <h3>Total Value: price x quantity</h3> 
+          </div>
+          <div class="asset-status ast">Status: <%= @asset.status %></div>
+          <div class="asset-notes ast">Notes: </div>
+          <div class="asset-description ast">Description: <%= @asset.description %></div>
+        </div>
+        <figure>
+          <div>IMAGE HERE</div>
+        </figure>
+      </div>
+    </main>
+  </div>
+</div>

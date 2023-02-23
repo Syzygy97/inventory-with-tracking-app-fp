@@ -1,10 +1,27 @@
-<h1>LIST OF ALL CATEGORIES</h1>
-
-<% @categories.each do |category| %>
-  <div class="category-box">
-  <%= link_to category do %>  
-    <h3>NAME: <%= category.name %></h3>
-    <h3>DESCRIPTION: <%= category.description %></h3>
-  <% end %>
+<div id="categories-container">
+  <%= render "dashboard/sidebar" %>
+  <div id="categories-content">
+    <nav>
+      <h3>Categories</h3>
+    </nav>
+    <header id="category-header">
+      <div>
+        <h1>Category List</h1><br>
+        <h4>Count: <%= @categories.count %></h4>
+      </div>
+      <div>
+        <%= link_to "+ Add New", new_category_path %>
+      </div>
+    </header>
+    <div id="category-list">
+      <% @categories.each do |category| %>
+        <div class="category-box">
+        <%= link_to category do %>  
+          <h3>NAME: <%= category.name %></h3>
+          <h3>DESCRIPTION: <%= category.description %></h3>
+        <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
-<% end %>
+</div>

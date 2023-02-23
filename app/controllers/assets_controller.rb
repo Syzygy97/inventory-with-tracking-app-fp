@@ -37,6 +37,7 @@ class AssetsController < ApplicationController
   end
 
   def set_asset
+    set_category
     @asset = @category.assets.find(params[:id])
   end
 

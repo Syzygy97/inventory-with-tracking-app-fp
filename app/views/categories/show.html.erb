@@ -1,15 +1,39 @@
-<h1><%= @category.name %></h1>
-<h3><i><%= @category.description %></i></h3>
-<%= link_to "Add an asset", new_category_asset_path(@category)%>
-
-<h2>LIST OF ASSETS</h2>
-<% @category.assets.each do |asset|%>
-  <ul>
-    <li>Name: <%= asset.name%></li>
-    <li>Description: <%= asset.description%></li>
-    <li>Quantity: <%= asset.quantity%></li>
-    <li>Class: <%= asset.classification%></li>
-    <li>Status: <%= asset.status%></li>
-  </ul>
-  <%= link_to "Deploy Asset", new_category_asset_marker_path(@category, asset.id)%>
-<% end %>
+<div id="category-show-container">
+  <%= render "dashboard/sidebar"%>
+  <div id="categories-show-content">
+    <nav>
+      <h3><%= link_to "Categories", categories_path%> > <%= @category.name %></h3>
+    </nav>
+    <header id="category-show-header">
+      <div>
+        <h1><%= @category.name %></h1>
+        <h3><i><%= @category.description %></i></h3>
+      </div>
+      <div>
+        <%= link_to "+ Add an asset", new_category_asset_path(@category)%>
+      </div>
+    </header>
+    <div id="asset-list">
+      <% @category.assets.each do |asset|%>
+        <%= link_to category_asset_path(@category, asset.id) do %>
+          <div class="asset-image">
+            IMAGE HERE
+          </div>
+          <div class="asset-info">
+            <h5>TRKFY<%= asset.category_id%><%= asset.id%></h5>
+            <h2><%= asset.name%></h2>
+            <span>
+              <h3><%= asset.quantity%></h3>
+              <h4>total price here</h4>
+            </span>
+          </div>
+          <div class="asset-transaction-info">
+            <h4>Class: <%= asset.classification%></h4>
+            <h4>Status: <%= asset.status%></h4>
+            <h4>Purchase Date: <%= asset.purchase_date.strftime("%b/%d/%Y")%></h4>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
