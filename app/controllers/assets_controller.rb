@@ -42,7 +42,7 @@ class AssetsController < ApplicationController
   end
 
   def asset_params
-    params.require(:asset).permit(:name, :description, :quantity, :classification, :status, :purchase_date, :invoice_number)
+    params.require(:asset).permit(:name, :description, :quantity, :classification, :status, :purchase_date, :invoice_number, :price, :notes)
     
   end
 end
