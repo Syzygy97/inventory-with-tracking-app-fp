@@ -33,8 +33,29 @@ class AssetsController < ApplicationController
   end
 
   def update
+    current_quantity = @asset.quantity
     if @asset.update(asset_params)
-      redirect_to category_asset_path
+      if asset_params["quantity"].to_i < current_quantity
+        @order = Order.create(
+          :name => @asset.name,
+          :quantity => (current_quantity - asset_params["quantity"].to_i),
+          :price => (@asset.price * (current_quantity - asset_params["quantity"].to_i)),
+          :classification => "Sell",
+          :transaction_date => Time.now
+        )
+        redirect_to category_asset_path
+      elsif asset_params["quantity"].to_i > current_quantity
+        @order = Order.create(
+          :name => @asset.name,
+          :quantity => (asset_params["quantity"].to_i - current_quantity),
+          :price => (@asset.price * (asset_params["quantity"].to_i - current_quantity)),
+          :classification => "Purchase",
+          :transaction_date => Time.now
+        )
+        redirect_to category_asset_path
+      else
+        redirect_to category_asset_path
+      end
     else
       render :edit
     end
