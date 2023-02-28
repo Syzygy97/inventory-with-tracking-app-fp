@@ -14,8 +14,7 @@
 
   <div class = "marker-form">
     <div>
-      <%= form.label :name %>
-      <%= form.text_field :name , class: "marker-form-name"%>
+      <%= form.text_field :name , class: "marker-form-name", value: @asset.name, type: :hidden%>
     </div>
 
     <div>

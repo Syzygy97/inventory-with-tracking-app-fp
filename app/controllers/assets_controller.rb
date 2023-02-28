@@ -16,6 +16,13 @@ class AssetsController < ApplicationController
   def create
     @asset = @category.assets.new(asset_params)
     if @asset.save
+      @order = Order.create(
+        :name => @asset.name,
+        :quantity => @asset.quantity,
+        :price => (@asset.price * @asset.quantity),
+        :classification => "Purchase",
+        :transaction_date => @asset.purchase_date
+      )
       redirect_to category_path(@category), notice: "Successfully created a new asset"
     else
       render :new, alert: "Unable to create a new category"
@@ -26,6 +33,11 @@ class AssetsController < ApplicationController
   end
 
   def update
+    if @asset.update(asset_params)
+      redirect_to category_asset_path
+    else
+      render :edit
+    end
   end
 
   def destroy
@@ -43,6 +55,9 @@ class AssetsController < ApplicationController
 
   def asset_params
     params.require(:asset).permit(:name, :description, :quantity, :classification, :status, :purchase_date, :invoice_number, :price, :notes)
-    
+  end
+
+  def order_params
+    params.require(:order).permit(:name, :quantity, :price, :classification, :transaction_date)
   end
 end

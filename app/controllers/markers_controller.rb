@@ -17,7 +17,8 @@ class MarkersController < ApplicationController
   def create
     @marker = @asset.markers.new(marker_params)
     if @marker.save
-      redirect_to maps_path, notice: "Successfully added a new marker"
+      @asset.update(status: 1)
+      redirect_to dashboard_path, notice: "Successfully added a new marker"
     else
       render :new, alert: "Unable to create a new marker"
     end
