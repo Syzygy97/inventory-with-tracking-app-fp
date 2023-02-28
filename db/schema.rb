@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_26_144216) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_28_121453) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,12 +27,26 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_26_144216) do
     t.bigint "category_id", null: false
     t.decimal "price", precision: 11, scale: 2
     t.string "notes"
+    t.decimal "rent_price", precision: 11, scale: 2
     t.index ["category_id"], name: "index_assets_on_category_id"
   end
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "deployments", force: :cascade do |t|
+    t.string "vehicle_name"
+    t.string "address"
+    t.integer "quantity"
+    t.date "deployment_date"
+    t.time "deployment_time"
+    t.decimal "price", precision: 11, scale: 2
+    t.string "notes"
+    t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -51,11 +65,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_26_144216) do
     t.string "description"
     t.decimal "latitude", precision: 10, scale: 6
     t.decimal "longitude", precision: 10, scale: 6
-    t.float "elevation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "asset_id", null: false
     t.string "address"
+    t.string "notes"
+    t.date "deployment_date"
+    t.time "deployment_time"
     t.index ["asset_id"], name: "index_markers_on_asset_id"
   end
 
