@@ -14,7 +14,7 @@
       </div>
     </header>
     <div id="asset-list">
-      <% @category.assets.each do |asset|%>
+      <% @assets.each do |asset|%>
         <%= link_to category_asset_path(@category, asset.id) do %>
           <div class="asset-image">
             <% if asset.image.content_type.in?(%w[image/jpeg image/png image/jpg]) %>
@@ -42,6 +42,7 @@
           </div>
         <% end %>
       <% end %>
+      <%= pagy_nav(@pagy).html_safe %>
     </div>
   </div>
 </div>
