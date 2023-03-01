@@ -17,7 +17,11 @@
       <% @category.assets.each do |asset|%>
         <%= link_to category_asset_path(@category, asset.id) do %>
           <div class="asset-image">
-            IMAGE HERE
+            <% if asset.image.content_type.in?(%w[image/jpeg image/png image/jpg]) %>
+              <%= image_tag(asset.image_as_thumbnail) if asset.image.attached? %>
+            <% else %>
+              NO IMAGE
+            <% end %>
           </div>
           <div class="asset-info">
             <h5>TRKFY<%= asset.category_id%><%= asset.id%></h5>

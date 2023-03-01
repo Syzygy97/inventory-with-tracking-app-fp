@@ -1,0 +1,29 @@
+<%= form_with(model: [@category, @asset], data: { turbo: false }) do |form| %>
+  <% if @asset.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@asset.errors.count, "error") %> prohibited this category from being saved:</h2>
+
+      <ul>
+        <% @asset.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class = "asset-image-form">
+    <div>
+      <%= form.label :name %>
+      <%= form.text_field :name , class: "asset-form-name"%>
+    </div>
+
+    <%# <div> %>
+      <%# <%= form.number_field :user_id, value: current_user.id, id: :category_user_id, type: :hidden %> 
+    <%# </#div> %>
+  </div>
+
+  <div class="asset-submit-btn">
+    <%= form.submit %>
+  </div>
+
+<% end %>
