@@ -23,6 +23,21 @@
     </div>
 
     <div>
+      <%= form.label :deployment_time %>
+      <%= form.time_field :deployment_time, class: "marker-form-time"%>
+    </div>
+
+    <div>
+      <%= form.label :deployment_date %>
+      <%= form.date_field :deployment_date, class: "marker-form-date"%>
+    </div>
+
+    <div>
+      <%= form.label :notes %>
+      <%= form.text_area :notes, class: "marker-form-notes"%>
+    </div>
+
+    <div>
       <%= form.label :latitude %>
       <%= form.number_field :latitude, step: :any, class: "marker-form-latitude", data: {"maps-target": "latitude"}%>
     </div>
