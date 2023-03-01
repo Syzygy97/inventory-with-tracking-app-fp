@@ -24,7 +24,7 @@
 
     <div>
       <%= form.label :classification %>
-      <%= form.number_field :classification, class: "asset-form-classification"%>
+      <%= form.select :classification, options_for_select(["Undeployable", "Deployable"]), class: "asset-form-classification"%>
     </div>
 
     <div>

@@ -10,10 +10,12 @@
           <h1><%= @asset.name %></h1>
           <span>
             <%= link_to "Update Asset", edit_category_asset_path(@category.id, @asset) %>
-            <% if @asset.classification == 1 %>
+            <% if @asset.classification == "Deployable" && @asset.status == "Available"%>
               <h3><%= link_to "Deploy Asset", new_category_asset_marker_path(@category, @asset) %></h3>
-            <% else %>
+            <% elsif @asset.classification == "Undeployable" %>
               <h3>Not Deployable</h3>
+            <% else %>
+              <h3>Currently Deployed</h3>
             <% end %>
           </span>
         </div>
@@ -29,11 +31,11 @@
             <h3>Class: <%= @asset.classification %></h3>
           </div>
           <div class="asset-price-total-value ast">
-            <h3>Price: example price</h3> 
-            <h3>Total Value: price x quantity</h3> 
+            <h3>Price: <%= number_to_currency(@asset.price, unit: "₱") %></h3> 
+            <h3>Total Value: <%= number_to_currency(@asset.quantity * @asset.price, unit: "₱") %></h3> 
           </div>
           <div class="asset-status ast">Status: <%= @asset.status %></div>
-          <div class="asset-notes ast">Notes: </div>
+          <div class="asset-notes ast">Notes: <%= @asset.notes %></div>
           <div class="asset-description ast">Description: <%= @asset.description %></div>
         </div>
         <figure>

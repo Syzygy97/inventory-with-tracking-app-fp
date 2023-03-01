@@ -35,6 +35,10 @@
   padding: 0 3rem;
 }
 
+#category-show-header > .add-new-asset {
+  width: 20%;
+}
+
 #category-list,
 #asset-list {
   height: 75%;
@@ -89,11 +93,18 @@
     h2 {
       flex-grow: 1;
     }
-    span {
+    div {
       height: 15%;
       display: flex;
       gap: 1em;
-      align-items: center;
+      align-items: baseline;
+      justify-content: space-between;
+
+      span {
+        display: flex;
+        align-items: baseline;
+        gap: 0.5em;
+      }
     }
   }
   .asset-transaction-info {
