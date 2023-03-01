@@ -16,8 +16,20 @@ class MarkersController < ApplicationController
 
   def create
     @marker = @asset.markers.new(marker_params)
+    updated_quantity = @asset.quantity - 1
     if @marker.save
-      redirect_to maps_path, notice: "Successfully added a new marker"
+      @asset.update(status: 1, quantity: updated_quantity)
+      @deployment = Deployment.create(
+        :vehicle_name => @asset.name,
+        :address => @marker.address,
+        :quantity => 1,
+        :price => @asset.rent_price,
+        :deployment_date => @marker.deployment_date,
+        :deployment_time => @marker.deployment_time,
+        :notes => @marker.notes,
+        :status => "Outgoing"
+      )
+      redirect_to dashboard_path, notice: "Successfully added a new marker"
     else
       render :new, alert: "Unable to create a new marker"
     end
@@ -44,6 +56,9 @@ class MarkersController < ApplicationController
     @marker = @asset.markers.find(params[:id])
   end
   def marker_params
-    params.require(:marker).permit(:name, :description, :latitude, :longitude, :elevation, :address)
+    params.require(:marker).permit(:name, :description, :latitude, :longitude, :address, :deployment_date, :deployment_time, :notes)
+  end
+  def deployment_params
+    params.require(:deployment).permit(:vehicle_name, :address, :quantity, :price, :notes, :deployment_date, :deployment_time, :status)
   end
 end

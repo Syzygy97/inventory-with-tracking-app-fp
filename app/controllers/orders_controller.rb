@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   def index
+    
   end
 
   def show
@@ -8,6 +9,13 @@ class OrdersController < ApplicationController
   def new
   end
 
+  def create
+    
+  end
   def destroy
   end
+
+  private
+
+  
 end

@@ -24,7 +24,7 @@
 
     <div>
       <%= form.label :classification %>
-      <%= form.select :classification, options_for_select(["Undeployable", "Deployable"]), class: "asset-form-classification" %>
+      <%= form.select :classification, options_for_select(["Undeployable", "Deployable"]), class: "asset-form-classification"%>
     </div>
 
     <div>
@@ -40,16 +40,6 @@
     <div>
       <%= form.label :invoice_number %>
       <%= form.number_field :invoice_number, class: "asset-form-invoice" %>
-    </div>
-
-    <div>
-      <%= form.label :purchase_date %>
-      <%= form.date_field :purchase_date, class: "asset-form-purchase-date"%>
-    </div>
-
-    <div>
-      <%= form.label :notes %>
-      <%= form.text_area :notes, class: "asset-form-notes"%>
     </div>
 
     <%# <div> %>

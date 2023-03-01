@@ -14,13 +14,27 @@
 
   <div class = "marker-form">
     <div>
-      <%= form.label :name %>
-      <%= form.text_field :name , class: "marker-form-name"%>
+      <%= form.text_field :name , class: "marker-form-name", value: @asset.name, type: :hidden%>
     </div>
 
     <div>
       <%= form.label :description %>
       <%= form.text_area :description, class: "marker-form-description"%>
+    </div>
+
+    <div>
+      <%= form.label :deployment_time %>
+      <%= form.time_field :deployment_time, class: "marker-form-time"%>
+    </div>
+
+    <div>
+      <%= form.label :deployment_date %>
+      <%= form.date_field :deployment_date, class: "marker-form-date"%>
+    </div>
+
+    <div>
+      <%= form.label :notes %>
+      <%= form.text_area :notes, class: "marker-form-notes"%>
     </div>
 
     <div>
@@ -46,6 +60,6 @@
   <div class="marker-submit-btn">
     <%= form.submit %>
   </div>
-  <div id="myMap" data-maps-target="myMap" style="width: 400px; height:400px"></div>
+  <div id="myMap" data-maps-target="myMap"></div>
 <% end %>
 </div>

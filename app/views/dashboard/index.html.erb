@@ -1,6 +1,59 @@
 <div id="dashboard-container">
   <%= render "sidebar" %>
   <main id="dashboard-content">
-    
+    <%= render "map_markers" %>
+    <div id="transaction-history">
+      <div id="recent-title">
+        <h1>Inventory</h1>
+        <h1>Deployment</h1>
+      </div>
+      <div id="recent-transactions-container">
+        <div id="recent-inventory">
+          <% @orders.reverse[0,4].each do |order|%>
+            <% if order.classification == "Purchase" || order.classification == "Sell"%>
+              <header>
+                <h5><%= order.classification%></h5>
+                <h5><%= order.transaction_date.strftime("%d %b %Y")%></h5>
+              </header>
+              <main>
+                <h3><%= order.name%></h3>
+                <span>
+                  <% if order.classification == "Purchase" %>
+                    <h3>-<%= number_to_currency(order.price, unit: "₱")%></h3>
+                    <h4>+<%= pluralize(order.quantity, "unit") %></h4>
+                  <% else %>
+                    <h3>+<%= number_to_currency(order.price, unit: "₱")%></h3>
+                    <h4>-<%= pluralize(order.quantity, "unit") %></h4>
+                  <% end %>
+                </span>
+              </main>
+            <% end %>
+          <% end %>
+        </div>
+        <div id="recent-deployment">
+          <% @deployments.each do |deployment|%>
+            <header>
+              <h5><%= deployment.address%></h5>
+              <h4><%= deployment.status%></h4>
+            </header>
+            <main>
+              <span class="recent-deployment-datetime">
+                <h3><%= deployment.vehicle_name %></h3>
+                <h5><%= deployment.deployment_date.strftime("%d %b %Y") %> | <%= deployment.deployment_time.strftime("%I:%M %p") %></h5>
+              </span>
+              <span>
+                <% if deployment.status == "Outgoing" %>
+                  <h3>-<%= pluralize(deployment.quantity, "unit") %></h3>
+                  <h4><%= number_to_currency(deployment.price, unit: "₱")%>/day</h4>
+                <% else %>
+                  <h3>+<%= pluralize(deployment.quantity, "unit") %></h3>
+                  <h4><%= number_to_currency(deployment.price, unit: "₱")%>/day</h4>
+                <% end %>
+              </span>
+            </main>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </main>
 </div>
