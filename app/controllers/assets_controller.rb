@@ -1,6 +1,8 @@
 class AssetsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_category, only: %i[ index show new create ]
   before_action :set_asset, only: %i[ show edit update destroy]
+  before_action :correct_user, only: [ :edit, :update, :destroy ]
 
   def index
     @assets = @category.assets
@@ -21,7 +23,8 @@ class AssetsController < ApplicationController
         :quantity => @asset.quantity,
         :price => (@asset.price * @asset.quantity),
         :classification => "Purchase",
-        :transaction_date => @asset.purchase_date
+        :transaction_date => @asset.purchase_date,
+        :user_id => current_user.id
       )
       redirect_to category_path(@category), notice: "Successfully created a new asset"
     else
@@ -41,7 +44,8 @@ class AssetsController < ApplicationController
           :quantity => (current_quantity - asset_params["quantity"].to_i),
           :price => (@asset.price * (current_quantity - asset_params["quantity"].to_i)),
           :classification => "Sell",
-          :transaction_date => Time.now
+          :transaction_date => Time.now,
+          :user_id => current_user.id
         )
         redirect_to category_asset_path
       elsif asset_params["quantity"].to_i > current_quantity
@@ -50,7 +54,8 @@ class AssetsController < ApplicationController
           :quantity => (asset_params["quantity"].to_i - current_quantity),
           :price => (@asset.price * (asset_params["quantity"].to_i - current_quantity)),
           :classification => "Purchase",
-          :transaction_date => Time.now
+          :transaction_date => Time.now,
+          :user_id => current_user.id
         )
         redirect_to category_asset_path
       else
@@ -64,6 +69,11 @@ class AssetsController < ApplicationController
   def destroy
   end
 
+  def correct_user
+    @category = current_user.categories.find_by(id: params[:category_id])
+    redirect_to dashboard_path, notice: "Not Authorized" if @category.nil?
+  end
+
   private
   def set_category
     @category = Category.find(params[:category_id])
@@ -75,10 +85,10 @@ class AssetsController < ApplicationController
   end
 
   def asset_params
-    params.require(:asset).permit(:name, :description, :quantity, :classification, :status, :purchase_date, :invoice_number, :price, :notes, :image, pictures: [])
+    params.require(:asset).permit(:name, :description, :quantity, :classification, :status, :purchase_date, :invoice_number, :price, :notes, :rent_price, :image, pictures: [])
   end
 
   def order_params
-    params.require(:order).permit(:name, :quantity, :price, :classification, :transaction_date)
+    params.require(:order).permit(:name, :quantity, :price, :classification, :transaction_date, :user_id)
   end
 end

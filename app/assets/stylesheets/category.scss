@@ -218,3 +218,16 @@
   border: 1px solid black;
   flex-grow: 1;
 }
+
+.pagy-nav {
+  .page {
+    background-color: red;
+  }
+  .page.active {
+    background-color: green;
+  }
+  .page.prev,
+  .page.next {
+    background-color: blue;
+  }
+}

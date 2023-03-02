@@ -22,10 +22,9 @@
       <%= form.text_area :description, class: "category-form-description"%>
     </div>
 
-    <%# <div> %>
-      <%# <%= form.number_field :user_id, value: current_user.id, id: :category_user_id, type: :hidden %> 
-    <%# </#div> %>
-  </div>
+    <div>
+      <%= form.number_field :user_id, value: current_user.id, id: :category_user_id, type: :hidden %>
+    </div>
 
   <div class="category-submit-btn">
     <%= form.submit %>
