@@ -23,6 +23,11 @@
     </div>
 
     <div>
+      <%= form.label :price %>
+      <%= form.number_field :price, step: 0.01, class: "asset-form-price"%>
+    </div>
+
+    <div>
       <%= form.label :classification %>
       <%= form.select :classification, options_for_select(["Undeployable", "Deployable"]), class: "asset-form-classification" %>
     </div>
@@ -33,8 +38,8 @@
     </div>
 
     <div>
-      <%= form.label :price %>
-      <%= form.number_field :price, step: 0.01, class: "asset-form-price"%>
+      <%= form.label :rent_price %>
+      <%= form.number_field :rent_price, step: 0.01, class: "asset-form-rent-price"%>
     </div>
 
     <div>

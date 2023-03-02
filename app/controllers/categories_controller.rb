@@ -6,6 +6,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
+    @pagy, @assets = pagy(@category.assets, items: 3)
   end
 
   def new
