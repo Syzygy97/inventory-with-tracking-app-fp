@@ -20,7 +20,7 @@
         <%= link_to "+ Add an asset", new_category_asset_path(@category)%>
       </div>
     </header>
-    <%= turbo_frame_tag :results, loading: :lazy do %>
+    <%= turbo_frame_tag :results do %>
       <div id="asset-list">
         <% @assets.each do |asset|%>
           <%= link_to category_asset_path(@category, asset.id) do %>

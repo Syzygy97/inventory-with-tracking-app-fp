@@ -27,7 +27,8 @@ class MarkersController < ApplicationController
         :deployment_date => @marker.deployment_date,
         :deployment_time => @marker.deployment_time,
         :notes => @marker.notes,
-        :status => "Outgoing"
+        :status => "Outgoing",
+        :user_id => current_user.id
       )
       redirect_to dashboard_path, notice: "Successfully added a new marker"
     else
@@ -59,6 +60,6 @@ class MarkersController < ApplicationController
     params.require(:marker).permit(:name, :description, :latitude, :longitude, :address, :deployment_date, :deployment_time, :notes)
   end
   def deployment_params
-    params.require(:deployment).permit(:vehicle_name, :address, :quantity, :price, :notes, :deployment_date, :deployment_time, :status)
+    params.require(:deployment).permit(:vehicle_name, :address, :quantity, :price, :notes, :deployment_date, :deployment_time, :status, :user_id)
   end
 end
