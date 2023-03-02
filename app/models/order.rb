@@ -1,5 +1,5 @@
 class Order < ApplicationRecord
-  # belongs_to :assets
+  belongs_to :user
 
   validates :name, :quantity, :classification, :transaction_date, :price, presence: true
 
