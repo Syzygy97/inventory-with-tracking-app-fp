@@ -1,6 +1,7 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  config.hosts.clear
   # Settings specified here will take precedence over those in config/application.rb.
   config.active_storage.variant_processor = :mini_magick
   # In the development environment your application's code is reloaded any time
