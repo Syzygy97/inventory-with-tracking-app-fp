@@ -25,4 +25,5 @@ test:
 
 production:
   <<: *default
-  database: inventory_with_tracking_app
+  url: <%= ENV[‘DATABASE_URL’] %>
+  database: inventory_with_tracking_app_production
