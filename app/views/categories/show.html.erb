@@ -3,6 +3,13 @@
   <div id="categories-show-content">
     <nav>
       <h3><%= link_to "Categories", categories_path%> > <%= @category.name %></h3>
+      <div>
+        <%= search_form_for @q, url: category_path, data: { turbo_frame: :results } do |f| %>
+          <%= f.label "Search an Asset →" %>
+          <%= f.search_field :name_cont, oninput: 'this.form.requestSubmit()', autofocus: true, autocomplete: 'off'%>
+        <% end %>
+        <h4><%= sort_link(@q, :name, "Asset Name") %></h4>
+      </div>
     </nav>
     <header id="category-show-header">
       <div>
@@ -13,36 +20,38 @@
         <%= link_to "+ Add an asset", new_category_asset_path(@category)%>
       </div>
     </header>
-    <div id="asset-list">
-      <% @assets.each do |asset|%>
-        <%= link_to category_asset_path(@category, asset.id) do %>
-          <div class="asset-image">
-            <% if asset.image.content_type.in?(%w[image/jpeg image/png image/jpg]) %>
-              <%= image_tag(asset.image_as_thumbnail) if asset.image.attached? %>
-            <% else %>
-              NO IMAGE
-            <% end %>
-          </div>
-          <div class="asset-info">
-            <h5>TRKFY<%= asset.category_id%><%= asset.id%></h5>
-            <h2><%= asset.name%></h2>
-            <div>
-              <span>
-                <h4><%= pluralize(asset.quantity, "unit") %></h4>
-                <h3>|</h3>
-                <h4><%= number_to_currency(asset.price, unit: "₱")%></h4>
-              </span>
-              <h3><%= number_to_currency(asset.price * asset.quantity, unit: "₱")%></h3>
+    <%= turbo_frame_tag :results, loading: :lazy do %>
+      <div id="asset-list">
+        <% @assets.each do |asset|%>
+          <%= link_to category_asset_path(@category, asset.id) do %>
+            <div class="asset-image">
+              <% if asset.image.content_type.in?(%w[image/jpeg image/png image/jpg]) %>
+                <%= image_tag(asset.image_as_thumbnail) if asset.image.attached? %>
+              <% else %>
+                NO IMAGE
+              <% end %>
             </div>
-          </div>
-          <div class="asset-transaction-info">
-            <h4>Class: <%= asset.classification%></h4>
-            <h4>Status: <%= asset.status%></h4>
-            <h4>Purchase Date: <%= asset.purchase_date.strftime("%b/%d/%Y")%></h4>
-          </div>
+            <div class="asset-info">
+              <h5>TRKFY<%= asset.category_id%><%= asset.id%></h5>
+              <h2><%= highlight(asset.name, params.dig(:q, :name_cont)) %></h2>
+              <div>
+                <span>
+                  <h4><%= pluralize(asset.quantity, "unit") %></h4>
+                  <h3>|</h3>
+                  <h4><%= number_to_currency(asset.price, unit: "₱")%></h4>
+                </span>
+                <h3><%= number_to_currency(asset.price * asset.quantity, unit: "₱")%></h3>
+              </div>
+            </div>
+            <div class="asset-transaction-info">
+              <h4>Class: <%= asset.classification%></h4>
+              <h4>Status: <%= asset.status%></h4>
+              <h4>Purchase Date: <%= asset.purchase_date.strftime("%b/%d/%Y")%></h4>
+            </div>
+          <% end %>
         <% end %>
-      <% end %>
-      <%= pagy_nav(@pagy).html_safe %>
-    </div>
+        <%= pagy_nav(@pagy).html_safe %>
+      </div>
+    <% end %>
   </div>
 </div>

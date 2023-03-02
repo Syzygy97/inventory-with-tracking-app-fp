@@ -6,7 +6,10 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @pagy, @assets = pagy(@category.assets, items: 3)
+    @q = @category.assets.ransack(params[:q])
+    # @assets = @q.result(distinct: true)
+    @pagy, @assets = pagy(@q.result(distinct: true), items: 3)
+    # @pagy, @assets = pagy(@category.assets, items: 3)
   end
 
   def new

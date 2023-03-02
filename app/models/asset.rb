@@ -20,4 +20,12 @@ class Asset < ApplicationRecord
     image.variant(resize_to_fit: [200, 200]).processed
   end
 
+  def self.ransackable_attributes(auth_object = nil)
+    [ "name" ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["category", "image_attachment", "image_blob", "markers", "pictures_attachments", "pictures_blobs"]
+  end
+
 end
