@@ -92,5 +92,5 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # config.action_mailer.default_url_options = { host: 'localhost:3000' } ##USE PRODUCTION URL INSTEAD
-  config.hosts << “my railway address here”
+  config.hosts << "inventory-with-tracking-app-fp-production.up.railway.app"
 end
