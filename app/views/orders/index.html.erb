@@ -1,2 +1,32 @@
-<h1>Orders#index</h1>
-<p>Find me in app/views/orders/index.html.erb</p>
+<div id="orders-history-container">
+  <%= render "dashboard/sidebar" %>
+  <div id="orders-history-content">
+    <% @orders.each do |order|%>
+      <header>
+        <%= order.transaction_date.strftime("%B %d, %Y") %>
+      </header>
+      <main>
+        <div class="order-type">
+          <% if order.classification == "Purchase" %>
+            <h4 class="purchase-order"><%= order.classification%></h4>
+          <% else %>
+            <h4 class="sell-order"><%= order.classification%></h4>
+          <% end %>
+          <h4><%= order.transaction_date.strftime("%I:%M %p") %></h4>
+        </div>
+        <div class="order-info">
+          <h2><%= order.name %></h2>
+          <span>
+            <% if order.classification == "Purchase" %>
+              <h3>-<%= number_to_currency(order.price, unit: "₱")%></h3>
+              <h4>+<%= pluralize(order.quantity, "unit") %></h4>
+            <% else %>
+              <h3>+<%= number_to_currency(order.price, unit: "₱")%></h3>
+              <h4>-<%= pluralize(order.quantity, "unit") %></h4>
+            <% end %>
+          </span>
+        </div>
+      </main>
+    <% end %>
+  </div>
+</div>

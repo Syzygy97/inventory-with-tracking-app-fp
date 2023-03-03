@@ -12,7 +12,11 @@
           <% @orders.reverse[0,4].each do |order|%>
             <% if order.classification == "Purchase" || order.classification == "Sell"%>
               <header>
-                <h5><%= order.classification%></h5>
+                <% if order.classification == "Purchase" %>
+                  <h5 class="purchase-order"><%= order.classification%></h5>
+                <% else %>
+                  <h5 class="sell-order"><%= order.classification%></h5>
+                <% end %>
                 <h5><%= order.transaction_date.strftime("%d %b %Y")%></h5>
               </header>
               <main>
@@ -31,10 +35,14 @@
           <% end %>
         </div>
         <div id="recent-deployment">
-          <% @deployments.each do |deployment|%>
+          <% @deployments.reverse[0,4].each do |deployment|%>
             <header>
               <h5><%= deployment.address%></h5>
-              <h4><%= deployment.status%></h4>
+              <% if deployment.status == "Outgoing" %>
+                <h4 class="outgoing-history"><%= deployment.status%></h4>
+              <% else %>
+                <h4 class="incoming-history"><%= deployment.status%></h4>
+              <% end %>
             </header>
             <main>
               <span class="recent-deployment-datetime">

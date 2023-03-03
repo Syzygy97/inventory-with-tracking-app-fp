@@ -1,3 +1,12 @@
-<h1>INPUT DEPLOYMENT ADDRESS FOR <%= @asset.name %></h1>
-
-<%= render "form" %>
+<%= turbo_frame_tag "modal" do %>
+  <div class="modal">
+    <h1>Deployment Address for<br><%= @asset.name %></h1>
+    <%= render "form" %>
+    <div>
+      <%= link_to "Cancel", "#", data: {
+        controller: "modals",
+        action: "modals#close",
+      }, class: "cancel-button" %>
+    </div>
+  </div>
+<% end %>

@@ -1,2 +1,13 @@
-<h1>Categories#edit</h1>
-<p>Find me in app/views/categories/edit.html.erb</p>
+<%= turbo_frame_tag "modal" do %>
+  <div class="modal">
+    <h1>Update Category</h1>
+    <%= render "form" %>
+    <br>
+    <div class="asset-cancel-btn">
+      <%= link_to "Cancel", "#", data: {
+        controller: "modals",
+        action: "modals#close",
+      }, class: "cancel-button" %>
+    </div>
+  </div>
+<% end %>

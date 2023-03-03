@@ -1,6 +1,10 @@
+$orangeMclrn: rgb(255, 90, 0);
+
 #categories-container,
 #category-show-container,
-#asset-show-container {
+#asset-show-container,
+#orders-history-container,
+#deployments-history-container {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -8,9 +12,13 @@
 
 #categories-content,
 #categories-show-content,
-#asset-show-content {
+#asset-show-content,
+#orders-history-content,
+#deployments-history-content {
   width: 85%;
   height: 100%;
+  background-color: rgb(246, 248, 249);
+  font-family: KanitEL;
 
   nav {
     width: 100%;
@@ -18,8 +26,18 @@
     border-bottom: 1px solid black;
     display: flex;
     align-items: center;
-    padding-left: 1em;
+    padding: 0 1em;
     justify-content: space-between;
+    background-color: rgb(221, 221, 221);
+
+    h3 > span {
+      color: rgb(167, 167, 180);
+
+      a {
+        color: rgb(167, 167, 180);
+        text-decoration: none;
+      }
+    }
   }
 }
 
@@ -34,10 +52,40 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 3rem;
+  font-family: RobotoConRegular;
 }
+#category-header > .new-category {
+  width: 10%;
+  height: 60px;
+  border-radius: 5px;
+  background-color: $orangeMclrn;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 
+  a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+  }
+}
 #category-show-header > .add-new-asset {
-  width: 20%;
+  width: 10%;
+  height: 60px;
+  border-radius: 5px;
+  background-color: $orangeMclrn;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-weight: 600;
+
+  a {
+    color: white;
+    text-decoration: none;
+    font-family: RobotoConRegular;
+  }
 }
 
 #category-list,
@@ -56,15 +104,109 @@
   overflow-y: auto;
 }
 .category-box {
-  border: 1px solid black;
+  border: 5px solid black;
   width: 250px;
   height: 250px;
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: $orangeMclrn;
+  gap: 2em;
+
+  a {
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    font-size: 0.8em;
+    font-family: KanitM;
+    letter-spacing: 0.2em;
+  }
+
+  footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+    font-size: 2em;
+
+    .button_to > button {
+      font-size: 1.25em;
+      background-color: $orangeMclrn;
+      border: none;
+      cursor: pointer;
+    }
+  }
 }
 
+a > .category-box {
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  font-size: 0.8em;
+  h1 {
+    text-decoration: none;
+  }
+}
+#category-list > a {
+  text-decoration: none;
+}
 #asset-list {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  sub {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5em;
+    padding-top: 0.5em;
+
+    .asset-totals {
+      display: flex;
+      align-items: center;
+      gap: 3em;
+      font-family: KanitM;
+
+      h3 > span {
+        color: rgb(167, 167, 180);
+        font-family: KanitEL;
+      }
+    }
+    .search-asset {
+      display: flex;
+      align-items: center;
+      gap: 3em;
+      font-family: KanitM;
+
+      h4 > a.sort_link {
+        color: black;
+        text-decoration: none;
+        border: 0.5px solid black;
+        border-radius: 5px;
+        padding: 0.3em;
+        background-color: rgb(228, 228, 228);
+      }
+      h4 > span {
+        font-family: KanitEL;
+      }
+    }
+  }
+}
+
+#asset-list > a {
+  background-color: white;
+}
+
+#q_name_cont {
+  height: 25px;
+  padding: 0 0.5em;
+  border-radius: 5px;
+  font-family: KanitEL;
 }
 #asset-list > a {
   color: black;
@@ -73,15 +215,16 @@
   height: 18vh;
   width: 90%;
   border: 1px solid black;
-  margin-top: 2em;
+  margin-top: 1em;
   list-style: none;
-  border-radius: 30px;
+  border-radius: 20px;
   position: relative;
 
   .asset-image {
     width: 20%;
     display: flex;
     justify-content: center;
+    overflow: hidden;
   }
   .asset-info {
     flex-grow: 1;
@@ -90,11 +233,15 @@
     padding: 0.5em 0.75em;
     display: flex;
     flex-direction: column;
+    font-family: KanitEL;
     h5 {
       height: 15%;
+      color: rgb(167, 167, 180);
     }
     h2 {
       flex-grow: 1;
+      font-weight: 800;
+      font-family: KanitM;
     }
     div {
       height: 15%;
@@ -107,12 +254,21 @@
         display: flex;
         align-items: baseline;
         gap: 0.5em;
+
+        h4 {
+          color: rgb(167, 167, 180);
+        }
       }
     }
   }
   .asset-transaction-info {
     width: 30%;
     padding: 0.5em 0.75em;
+    font-family: KanitEL;
+
+    h4 > span {
+      color: rgb(167, 167, 180);
+    }
 
     button {
       margin-top: 3em;
@@ -139,14 +295,18 @@
   width: 100%;
   height: 15%;
   padding: 0.5em 1em;
+  background-color: white;
 
   .asset-show-name {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    align-items: center;
+    // margin-top: 0.5em;
 
     h1 {
       flex-grow: 1;
+      font-family: KanitM;
     }
     span {
       width: 30%;
@@ -154,14 +314,52 @@
       justify-content: space-around;
       align-items: center;
     }
+
+    span > a {
+      color: white;
+      text-decoration: none;
+      border: 1px solid black;
+      border-radius: 5px;
+      padding: 0.5em;
+      font-weight: 600;
+      background-color: $orangeMclrn;
+    }
+
+    span > .deployable-btn > a,
+    span > .undeployable-btn,
+    span > .currently-deployed-btn {
+      color: white;
+      text-decoration: none;
+      border: 1px solid black;
+      border-radius: 5px;
+      padding: 0.5em;
+      font-weight: 600;
+    }
+
+    span > .deployable-btn > a {
+      background-color: green;
+    }
+    span > .undeployable-btn {
+      background-color: red;
+    }
+    span > .currently-deployed-btn {
+      background-color: blue;
+    }
   }
   .asset-show-id {
     display: flex;
     border-top: 1px solid black;
     align-items: center;
     gap: 2em;
-    margin-top: 1.25em;
+    margin: 0.5em 0;
     padding-top: 0.5em;
+
+    h3 {
+      label {
+        font-family: KanitEL;
+        color: rgb(167, 167, 180);
+      }
+    }
   }
 }
 #asset-show-info {
@@ -169,7 +367,7 @@
   height: 85%;
   padding: 0.5em 1em;
   display: flex;
-
+  background-color: white;
   figure {
     width: 50%;
     display: flex;
@@ -181,6 +379,7 @@
       height: 50%;
       display: flex;
       justify-content: center;
+      background-color: white;
     }
   }
 }
@@ -201,33 +400,205 @@
     width: 45%;
     height: 6vh;
     border: 1px solid black;
+    border-radius: 5px;
     font-size: 1.25em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    label {
+      position: absolute;
+      top: -10px;
+      font-size: 0.75em;
+      left: 10px;
+      padding: 0 0.5em;
+      background-color: white;
+      color: rgb(167, 167, 180);
+    }
   }
 }
+
 .asset-status,
 .asset-notes {
   width: 100%;
   border: 1px solid black;
-  font-size: 2em;
+  border-radius: 5px;
 }
+
 .asset-status {
-  text-align: center;
+  h2 {
+    height: 6vh;
+    font-size: 1.25em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    position: relative;
+
+    label {
+      position: absolute;
+      top: -10px;
+      font-size: 0.75em;
+      left: 45%;
+      padding: 0 0.5em;
+      background-color: white;
+      color: rgb(167, 167, 180);
+    }
+  }
 }
+
+.asset-notes {
+  padding: 1em;
+  h4 {
+    font-size: 1.25em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    label {
+      position: absolute;
+      top: -25px;
+      font-size: 0.75em;
+      left: 45%;
+      padding: 0 0.5em;
+      background-color: white;
+      color: rgb(167, 167, 180);
+    }
+  }
+}
+
 .asset-description {
   width: 100%;
   border: 1px solid black;
+  border-radius: 5px;
   flex-grow: 1;
+  font-size: 1.5em;
+  padding: 1em 0.75em;
+  position: relative;
+
+  h4 {
+    font-size: 0.75em;
+    position: relative;
+
+    label {
+      position: absolute;
+      top: -35px;
+      font-size: 1rem;
+      left: 10px;
+      padding: 0 0.5em;
+      background-color: white;
+      color: rgb(167, 167, 180);
+    }
+  }
 }
 
+#asset-list > nav.pagy-nav.pagination {
+  background-color: rgb(246, 248, 249);
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
 .pagy-nav {
   .page {
-    background-color: red;
+    background-color: white;
+    padding: 0.5em;
+    border: 1px solid black;
+
+    a {
+      color: black;
+      text-decoration: none;
+    }
   }
   .page.active {
-    background-color: green;
+    background-color: $orangeMclrn;
+    color: white;
   }
-  .page.prev,
+  .page.prev {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
   .page.next {
-    background-color: blue;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+}
+
+// ORDER HISTORY
+
+#orders-history-content {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  padding: 0 0.75em;
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 6.4vh;
+    background-color: rgb(221, 221, 221);
+    font-size: 2.75em;
+    border-radius: 25px;
+    font-weight: 600;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1em;
+
+    div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      span {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
+  }
+}
+.order-info {
+  h2 {
+    font-family: KanitM;
+  }
+}
+
+// DEPLOYMENT CSS
+
+#deployments-history-content {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  padding: 0 0.75em;
+
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 6.4vh;
+    background-color: rgb(221, 221, 221);
+    font-size: 2.75em;
+    border-radius: 25px;
+    font-weight: 600;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+
+    .deployment-type,
+    .deployment-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h2 {
+        font-family: KanitM;
+      }
+    }
   }
 }

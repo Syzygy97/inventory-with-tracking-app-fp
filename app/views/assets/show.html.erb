@@ -2,41 +2,44 @@
   <%= render "dashboard/sidebar"%>
   <div id="asset-show-content">
     <nav>
-      <h3> <%= link_to "Categories", categories_path%> > <%= link_to "#{@category.name}", category_path(@category)%> > <%= @asset.name %></h3>
+      <h3><span><%= link_to "Categories", categories_path%> > <%= link_to "#{@category.name}", category_path(@category)%> ></span> <%= @asset.name %></h3>
+      <h3><%= current_user.email %></h3>
     </nav>
     <main>
       <div id="asset-show-sub-header">
         <div class="asset-show-name">
           <h1><%= @asset.name %></h1>
           <span>
-            <%= link_to "Update Asset", edit_category_asset_path(@category.id, @asset) %>
+            <%= link_to "Update Asset", edit_category_asset_path(@category.id, @asset), data: { turbo_frame: "modal" } %>
             <% if @asset.classification == "Deployable" && @asset.status == "Available"%>
-              <h3><%= link_to "Deploy Asset", new_category_asset_marker_path(@category, @asset) %></h3>
+              <h3 class="deployable-btn"><%= link_to "Deploy Asset", new_category_asset_marker_path(@category, @asset), data: { turbo_frame: "modal"} %></h3>
             <% elsif @asset.classification == "Undeployable" %>
-              <h3>Not Deployable</h3>
+              <h3 class="undeployable-btn">Not Deployable</h3>
             <% else %>
-              <h3>Currently Deployed</h3>
+              <h3 class="currently-deployed-btn">Currently Deployed</h3>
             <% end %>
           </span>
         </div>
         <div class="asset-show-id">
-          <h3>Truckify ID: TRKFY<%= @category.id %><%= @asset.id %></h3>
-          <h3>Updated at: <%= @asset.updated_at %></h3>
+          <h3><label>Truckify ID:</label> TRKFY<%= @category.id %><%= @asset.id %></h3>
+          <h3><label>Updated at:</label> <%= @asset.updated_at.strftime("%Y-%m-%d %I:%M:%S %p") %></h3>
         </div>
       </div>
       <div id="asset-show-info">
         <div>
           <div class="asset-quantity-class ast">
-            <h3>Quantity: <%= @asset.quantity %></h3>
-            <h3>Class: <%= @asset.classification %></h3>
+            <h3><label>Quantity</label><%= @asset.quantity %></h3>
+            <h3><label>Class</label><%= @asset.classification %></h3>
           </div>
           <div class="asset-price-total-value ast">
-            <h3>Price: <%= number_to_currency(@asset.price, unit: "₱") %></h3> 
-            <h3>Total Value: <%= number_to_currency(@asset.quantity * @asset.price, unit: "₱") %></h3> 
+            <h3><label>Price, ₱</label><%= number_to_currency(@asset.price, unit: "₱") %></h3> 
+            <h3><label>Total Value, ₱</label><%= number_to_currency(@asset.quantity * @asset.price, unit: "₱") %></h3> 
           </div>
-          <div class="asset-status ast">Status: <%= @asset.status %></div>
-          <div class="asset-notes ast">Notes: <%= @asset.notes %></div>
-          <div class="asset-description ast">Description: <%= @asset.description %></div>
+          <div class="asset-status ast">
+            <h2><label>Status</label><%= @asset.status %></h2>
+          </div>
+          <div class="asset-notes ast"><h4><label>Notes</label><%= @asset.notes %></h4></div>
+          <div class="asset-description ast"><h4><label>Description</label><%= @asset.description %></h4></div>
         </div>
         <figure>
           <div>
