@@ -2,14 +2,8 @@
   <%= render "dashboard/sidebar"%>
   <div id="categories-show-content">
     <nav>
-      <h3><%= link_to "Categories", categories_path%> > <%= @category.name %></h3>
-      <div>
-        <%= search_form_for @q, url: category_path, data: { turbo_frame: :results } do |f| %>
-          <%= f.label "Search an Asset →" %>
-          <%= f.search_field :name_cont, oninput: 'this.form.requestSubmit()', autofocus: true, autocomplete: 'off'%>
-        <% end %>
-        <h4><%= sort_link(@q, :name, "Asset Name") %></h4>
-      </div>
+      <h3><span><%= link_to "Categories", categories_path%> ></span> <%= @category.name %></h3>
+      <h3><%= current_user.email %></h3>
     </nav>
     <header id="category-show-header">
       <div>
@@ -17,11 +11,25 @@
         <h3><i><%= @category.description %></i></h3>
       </div>
       <div class="add-new-asset">
-        <%= link_to "+ Add an asset", new_category_asset_path(@category)%>
+        <%= link_to "+ ADD A NEW ASSET", new_category_asset_path(@category), data: { turbo_frame: "modal" }%>
       </div>
     </header>
     <%= turbo_frame_tag :results do %>
       <div id="asset-list">
+        <sub>
+          <div class="asset-totals">
+            <h3><span>Items:</span> <%= @all_user_assets.count%></h3>
+            <h3><span>Quantity:</span> <%= pluralize(@all_user_assets.map(&:quantity).sum, "unit") %></h3>
+            <%# <h3>Total Value: </h3> %>
+          </div>
+          <div class="search-asset">
+            <%= search_form_for @q, url: category_path, data: { turbo_frame: :results } do |f| %>
+              <%= f.label "🔍" %>
+              <%= f.search_field :name_cont, oninput: 'this.form.requestSubmit()', autofocus: true, autocomplete: 'off', placeholder: "search assets"%>
+            <% end %>
+            <h4><span>Sort by:</span> <%= sort_link(@q, :name, "Asset Name ⇅") %></h4>
+          </div>
+        </sub>
         <% @assets.each do |asset|%>
           <%= link_to category_asset_path(@category, asset.id) do %>
             <div class="asset-image">
@@ -38,15 +46,15 @@
                 <span>
                   <h4><%= pluralize(asset.quantity, "unit") %></h4>
                   <h3>|</h3>
-                  <h4><%= number_to_currency(asset.price, unit: "₱")%></h4>
+                  <h5><%= number_to_currency(asset.price, unit: "₱")%></h5>
                 </span>
                 <h3><%= number_to_currency(asset.price * asset.quantity, unit: "₱")%></h3>
               </div>
             </div>
             <div class="asset-transaction-info">
-              <h4>Class: <%= asset.classification%></h4>
-              <h4>Status: <%= asset.status%></h4>
-              <h4>Purchase Date: <%= asset.purchase_date.strftime("%b/%d/%Y")%></h4>
+              <h4><span>Class:</span> <%= asset.classification%></h4>
+              <h4><span>Status:</span> <%= asset.status%></h4>
+              <h4><span>Purchase Date:</span> <%= asset.purchase_date.strftime("%d %b %Y")%></h4>
             </div>
           <% end %>
         <% end %>

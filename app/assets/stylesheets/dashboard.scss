@@ -1,3 +1,8 @@
+$blueBg: #071742;
+$greenBg: #43ef97;
+$lightBlueGray: rgb(32, 48, 81);
+$orangeMclrn: rgb(255, 90, 0);
+
 #dashboard-container {
   width: 100vw;
   height: 100vh;
@@ -8,7 +13,82 @@
   height: 100%;
   border-right: 2px solid black;
   width: calc(15vw - 2px);
+  background-color: rgb(255, 90, 0);
+  flex-direction: column;
+  justify-content: space-between;
+
+  .sidebar-logo {
+    height: 20%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+      font-family: KanitM;
+      font-size: 5em;
+    }
+
+    h4 {
+      font-family: KanitBI;
+      font-size: 1.25em;
+    }
+  }
+
+  .sidebar-list {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1em;
+    font-family: RobotoConRegular;
+  }
+  ul > h3 {
+    color: white;
+    margin-bottom: 1em;
+    text-align: center;
+    font-size: 1.5em;
+  }
+  li {
+    list-style: none;
+    margin-bottom: 1em;
+    font-family: RobotoConRegular;
+    font-size: 1.25em;
+    padding: 0.5em 0;
+    padding-left: 0.5em;
+    color: white;
+    transition: padding-left 250ms linear;
+
+    a {
+      width: 100%;
+      text-decoration: none;
+      color: white;
+    }
+  }
+  li:hover {
+    background-color: $lightBlueGray;
+    font-weight: 800;
+    padding-left: 2em;
+    transition: padding-left 250ms linear;
+  }
 }
+
+.sidebar-list > ul > .button_to > button {
+  padding: 0.5em;
+  color: white;
+  background-color: red;
+  margin-left: 0.5em;
+  font-weight: 600;
+  font-size: 1.25em;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.sidebar-list > ul > .button_to > button:hover {
+  background-color: rgb(130, 28, 28);
+}
+
 #dashboard-content {
   width: 85vw;
   display: flex;
@@ -26,13 +106,17 @@
     width: 80vw;
     height: 38vh;
     border: 2px solid black;
+    font-family: KanitEL;
 
     #recent-title {
       height: 15%;
       width: 100%;
       display: flex;
       justify-content: space-around;
-      align-items: baseline;
+      align-items: center;
+      font-family: KanitM;
+      color: white;
+      background-color: $orangeMclrn;
     }
   }
 }
@@ -46,6 +130,7 @@
     width: 50%;
     border-top: 1px solid black;
     padding: 0.5em;
+    overflow: auto;
   }
 
   div:first-child {
@@ -57,16 +142,20 @@
 #recent-deployment {
   display: flex;
   flex-direction: column;
+  background-color: rgb(221, 221, 221);
 
   header,
   main {
     display: flex;
     justify-content: space-between;
+    background-color: white;
+    padding: 0 0.5em;
   }
-
+  header {
+    border-bottom: 1px solid rgb(221, 221, 221);
+  }
   main {
     align-items: center;
-
     span {
       display: flex;
       flex-direction: column;
@@ -78,4 +167,30 @@
       align-items: flex-start;
     }
   }
+}
+
+.outgoing-history {
+  color: white;
+  background-color: red;
+  border-radius: 3px;
+  padding: 0.25em 0.5em;
+}
+.incoming-history {
+  color: white;
+  background-color: green;
+  border-radius: 3px;
+  padding: 0.25em 0.5em;
+}
+
+.purchase-order {
+  color: white;
+  background-color: red;
+  border-radius: 3px;
+  padding: 0 0.5em;
+}
+.sell-order {
+  color: white;
+  background-color: green;
+  border-radius: 3px;
+  padding: 0 0.5em;
 }

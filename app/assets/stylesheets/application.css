@@ -14,6 +14,23 @@
  *= require_self
  */
 
+@font-face {
+  font-family: RobotoConRegular;
+  src: url("RobotoCondensed-Regular.ttf");
+}
+@font-face {
+  font-family: KanitEL;
+  src: url("Kanit-ExtraLight.ttf");
+}
+@font-face {
+  font-family: KanitM;
+  src: url("Kanit-Medium.ttf");
+}
+@font-face {
+  font-family: KanitBI;
+  src: url("Kanit-BoldItalic.ttf");
+}
+
 * {
   margin: 0;
   padding: 0;

@@ -1,2 +1,12 @@
-<h1>Create a New Category</h1>
-<%= render "form" %>
+<%= turbo_frame_tag "modal" do %>
+  <div class="modal">
+    <h1>Create a New Category</h1>
+    <%= render "form" %>
+    <div>
+      <%= link_to "Cancel", "#", data: {
+        controller: "modals",
+        action: "modals#close",
+      }, class: "cancel-button" %>
+    </div>
+  </div>
+<% end %>

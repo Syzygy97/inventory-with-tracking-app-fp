@@ -1,0 +1,33 @@
+<div id="deployments-history-container">
+  <%= render "dashboard/sidebar" %>
+  <div id="deployments-history-content">
+    <% @deployments.each do |deployment|%>
+      <header>
+        <h3><%= deployment.deployment_date.strftime("%B %d, %Y") %></h3>
+        <h4>(<%= deployment.deployment_time.strftime("%I:%M %p") %>)</h4>
+      </header>
+      <main>
+        <div class="deployment-type">
+          <h3><%= deployment.address %></h3>
+          <% if deployment.status == "Outgoing" %>
+            <h4 class="outgoing-history"><%= deployment.status%></h4>
+          <% else %>
+            <h4 class="incoming-history"><%= deployment.status%></h4>
+          <% end %>
+        </div>
+        <div class="deployment-info">
+          <h2><%= deployment.vehicle_name %></h2>
+          <span>
+            <% if deployment.status == "Outgoing" %>
+              <h3>-<%= pluralize(deployment.quantity, "unit") %></h3>
+              <h3><%= number_to_currency(deployment.price, unit: "₱")%>/day</h3>
+            <% else %>
+              <h3>+<%= pluralize(deployment.quantity, "unit") %></h3>
+              <h3><%= number_to_currency(deployment.price, unit: "₱")%>/day</h3>
+            <% end %>
+          </span>
+        </div>
+      </main>
+    <% end %>
+  </div>
+</div>

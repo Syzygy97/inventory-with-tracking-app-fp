@@ -1,2 +1,13 @@
-<h1>Add a New Asset for <%= @category.name %></h1>
-<%= render "form" %>
+<%= turbo_frame_tag "modal" do %>
+  <div class="modal">
+    <h1>Add a New Asset for<br><%= @category.name %></h1>
+    <%= render "form" %>
+    <br>
+    <div class="asset-cancel-btn">
+      <%= link_to "Cancel", "#", data: {
+        controller: "modals",
+        action: "modals#close",
+      }, class: "cancel-button" %>
+    </div>
+  </div>
+<% end %>

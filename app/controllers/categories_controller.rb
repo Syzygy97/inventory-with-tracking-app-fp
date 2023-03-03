@@ -8,14 +8,14 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    # debugger
     @q = @category.assets.ransack(params[:q])
     # @assets = @q.result(distinct: true)
     @pagy, @assets = pagy(@q.result(distinct: true), items: 3)
+    @all_user_assets = @category.assets
     # @pagy, @assets = pagy(@category.assets, items: 3)
   end
 
-  def new
+  def new 
     @category = Category.new
   end
   
@@ -32,9 +32,17 @@ class CategoriesController < ApplicationController
   end
 
   def update
+    if @category.update(category_params)
+      redirect_to category_url
+    else
+      render :edit
+    end
   end
 
   def destroy
+    @category.destroy
+
+    redirect_to categories_path
   end
 
   def correct_user

@@ -42,19 +42,16 @@
       <%= form.number_field :invoice_number, class: "asset-form-invoice" %>
     </div>
 
-    <div>
+    <div class="single-image-add">
       <%= form.label :image %>
       <%= form.file_field :image, class: "asset-form-image" %>
     </div>
 
-    <div>
+    <div class="multiple-images-add">
       <%= form.label :pictures %>
       <%= form.file_field :pictures, multiple: true, class: "asset-form-pictures" %>
     </div>
       
-    <%# <div> %>
-      <%# <%= form.number_field :user_id, value: current_user.id, id: :category_user_id, type: :hidden %> 
-    <%# </#div> %>
   </div>
 
   <div class="asset-submit-btn">
