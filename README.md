@@ -1,24 +1,49 @@
-# README
+# Truckify
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Inventory App integrated with monitoring using the BING MAPS API.
 
-Things you may want to cover:
+## Ruby Version
 
-* Ruby version
+- Ruby 3.0.2p107
 
-* System dependencies
+## Rails Version
 
-* Configuration
+- Rails 7.0.4.2
 
-* Database creation
+## Installation
 
-* Database initialization
+Clone the repository in your terminal.
 
-* How to run the test suite
+```
+https://github.com/Syzygy97/inventory-with-tracking-app-fp
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+Install all dependencies of the app using your terminal.
 
-* Deployment instructions
+```
+bundle install
+```
 
-* ...
+Run the server in your terminal.
+
+```
+rails s
+```
+
+## **FEATURES**
+
+- ### **Account Management**
+- ### **Categorization of assets**
+- ### **Map overview of deployed assets**
+- ### **Inventory Movement History**
+- ### **Deployment History**
+- ### **Search through your assets**
+- ### **Sort assets**
+- ### **Pagination**
+
+## **Check out live app**
+
+```
+https://inventory-with-tracking-app-fp-production.up.railway.app/
+
+```
