@@ -18,14 +18,7 @@ class AssetsController < ApplicationController
   def create
     @asset = @category.assets.new(asset_params)
     if @asset.save
-      @order = Order.create(
-        :name => @asset.name,
-        :quantity => @asset.quantity,
-        :price => (@asset.price * @asset.quantity),
-        :classification => "Purchase",
-        :transaction_date => @asset.purchase_date,
-        :user_id => current_user.id
-      )
+      @asset.create_order current_user
       redirect_to category_path(@category), notice: "Successfully created a new asset"
     else
       render :new, alert: "Unable to create a new category"
@@ -43,7 +36,7 @@ class AssetsController < ApplicationController
           :name => @asset.name,
           :quantity => (current_quantity - asset_params["quantity"].to_i),
           :price => (@asset.price * (current_quantity - asset_params["quantity"].to_i)),
-          :classification => "Sell",
+          :classification => Asset::SELL,
           :transaction_date => Time.now,
           :user_id => current_user.id
         )
@@ -53,7 +46,7 @@ class AssetsController < ApplicationController
           :name => @asset.name,
           :quantity => (asset_params["quantity"].to_i - current_quantity),
           :price => (@asset.price * (asset_params["quantity"].to_i - current_quantity)),
-          :classification => "Purchase",
+          :classification => Asset::PURCHASE,
           :transaction_date => Time.now,
           :user_id => current_user.id
         )
