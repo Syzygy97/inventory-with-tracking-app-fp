@@ -9,9 +9,9 @@ class CategoriesController < ApplicationController
 
   def show
     @q = @category.assets.ransack(params[:q])
-    # @assets = @q.result(distinct: true)
     @pagy, @assets = pagy(@q.result(distinct: true), items: 3)
     @all_user_assets = @category.assets
+    # @assets = @q.result(distinct: true)
     # @pagy, @assets = pagy(@category.assets, items: 3)
   end
 
